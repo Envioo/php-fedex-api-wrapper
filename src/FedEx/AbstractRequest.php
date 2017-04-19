@@ -47,7 +47,7 @@ abstract class AbstractRequest
      */
     public function __construct(\SoapClient $soapClient = null)
     {
-        $this->soapClient = $soapClient ?: new \SoapClient(static::getWsdlPath(), ['trace' => true]);
+        $this->soapClient = $soapClient ?: new \SoapClient(static::getWsdlPath(), ['trace' => true, 'cache_wsdl' => WSDL_CACHE_NONE]);
     }
 
     /**

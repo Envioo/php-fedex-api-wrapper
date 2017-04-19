@@ -4,7 +4,7 @@ namespace FedEx\RateService\ComplexType;
 use FedEx\AbstractComplexType;
 
 /**
- * The descriptive data for the shipment being tendered to FedEx.
+ * RequestedShipment
  *
  * @author      Jeremy Dunn <jeremy@jsdunn.info>
  * @package     PHP FedEx API wrapper
@@ -14,12 +14,15 @@ use FedEx\AbstractComplexType;
  * @property \FedEx\RateService\SimpleType\DropoffType|string $DropoffType
  * @property \FedEx\RateService\SimpleType\ServiceType|string $ServiceType
  * @property \FedEx\RateService\SimpleType\PackagingType|string $PackagingType
+ * @property ShipmentVariationOptionDetail[] $VariationOptions
  * @property Weight $TotalWeight
  * @property Money $TotalInsuredValue
+ * @property string $PreferredCurrency
  * @property Party $Shipper
  * @property Party $Recipient
  * @property string $RecipientLocationNumber
  * @property ContactAndAddress $Origin
+ * @property Party $SoldTo
  * @property Payment $ShippingChargesPayment
  * @property ShipmentSpecialServicesRequested $SpecialServicesRequested
  * @property ExpressFreightDetail $ExpressFreightDetail
@@ -36,6 +39,7 @@ use FedEx\AbstractComplexType;
  * @property \FedEx\RateService\SimpleType\EdtRequestType|string $EdtRequestType
  * @property int $PackageCount
  * @property \FedEx\RateService\SimpleType\ShipmentOnlyFieldsType|string[] $ShipmentOnlyFields
+ * @property ShipmentConfigurationData $ConfigurationData
  * @property RequestedPackageLineItem[] $RequestedPackageLineItems
 
  */
@@ -49,7 +53,7 @@ class RequestedShipment extends AbstractComplexType
     protected $name = 'RequestedShipment';
 
     /**
-     * Identifies the date and time the package is tendered to FedEx. Both the date and time portions of the string are expected to be used. The date should not be a past date or a date more than 10 days in the future. The time is the local time of the shipment based on the shipper's time zone. The date component must be in the format: YYYY-MM-DD (e.g. 2006-06-26). The time component must be in the format: HH:MM:SS using a 24 hour clock (e.g. 11:00 a.m. is 11:00:00, whereas 5:00 p.m. is 17:00:00). The date and time parts are separated by the letter T (e.g. 2006-06-26T17:00:00). There is also a UTC offset component indicating the number of hours/mainutes from UTC (e.g 2006-06-26T17:00:00-0400 is defined form June 26, 2006 5:00 pm Eastern Time).
+     * Set ShipTimestamp
      *
      * @param string $shipTimestamp
      * @return $this
@@ -61,7 +65,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Identifies the method by which the package is to be tendered to FedEx. This element does not dispatch a courier for package pickup. See DropoffType for list of valid enumerated values.
+     * Set DropoffType
      *
      * @param \FedEx\RateService\SimpleType\DropoffType|string $dropoffType
      * @return $this
@@ -73,7 +77,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Identifies the FedEx service to use in shipping the package. See ServiceType for list of valid enumerated values.
+     * Set ServiceType
      *
      * @param \FedEx\RateService\SimpleType\ServiceType|string $serviceType
      * @return $this
@@ -85,7 +89,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Identifies the packaging used by the requestor for the package. See PackagingType for list of valid enumerated values.
+     * Set PackagingType
      *
      * @param \FedEx\RateService\SimpleType\PackagingType|string $packagingType
      * @return $this
@@ -97,7 +101,19 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Identifies the total weight of the shipment being conveyed to FedEx.This is only applicable to International shipments and should only be used on the first package of a mutiple piece shipment.This value contains 1 explicit decimal position
+     * The shipment variations for the current shipment expressed in key-value pairs.
+     *
+     * @param ShipmentVariationOptionDetail[] $variationOptions
+     * @return $this
+     */
+    public function setVariationOptions(array $variationOptions)
+    {
+        $this->values['VariationOptions'] = $variationOptions;
+        return $this;
+    }
+
+    /**
+     * Set TotalWeight
      *
      * @param Weight $totalWeight
      * @return $this
@@ -109,7 +125,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Total insured amount.
+     * Specifies the total declared value for carriage of the shipment. The declared value for carriage represents the maximum liability of FedEx in connection with a shipment, including, but not limited to, any loss, damage, delay, mis-delivery, nondelivery, misinformation, any failure to provide information, or mis-delivery of information relating to the shipment.
      *
      * @param Money $totalInsuredValue
      * @return $this
@@ -121,7 +137,19 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Descriptive data identifying the party responsible for shipping the package. Shipper and Origin should have the same address.
+     * This attribute indicates the currency the caller requests to have used in all returned monetary values (when a choice is possible).
+     *
+     * @param string $preferredCurrency
+     * @return $this
+     */
+    public function setPreferredCurrency($preferredCurrency)
+    {
+        $this->values['PreferredCurrency'] = $preferredCurrency;
+        return $this;
+    }
+
+    /**
+     * Set Shipper
      *
      * @param Party $shipper
      * @return $this
@@ -133,7 +161,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Descriptive data identifying the party receiving the package.
+     * Set Recipient
      *
      * @param Party $recipient
      * @return $this
@@ -145,7 +173,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * A unique identifier for a recipient location
+     * Set RecipientLocationNumber
      *
      * @param string $recipientLocationNumber
      * @return $this
@@ -169,7 +197,19 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Descriptive data indicating the method and means of payment to FedEx for providing shipping services.
+     * Set SoldTo
+     *
+     * @param Party $soldTo
+     * @return $this
+     */
+    public function setSoldTo(Party $soldTo)
+    {
+        $this->values['SoldTo'] = $soldTo;
+        return $this;
+    }
+
+    /**
+     * Set ShippingChargesPayment
      *
      * @param Payment $shippingChargesPayment
      * @return $this
@@ -181,7 +221,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Descriptive data regarding special services requested by the shipper for this shipment. If the shipper is requesting a special service which requires additional data (e.g. COD), the special service type must be present in the specialServiceTypes collection, and the supporting detail must be provided in the appropriate sub-object. For example, to request COD, "COD" must be included in the SpecialServiceTypes collection and the CodDetail object must contain the required data.
+     * Set SpecialServicesRequested
      *
      * @param ShipmentSpecialServicesRequested $specialServicesRequested
      * @return $this
@@ -193,7 +233,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Details specific to an Express freight shipment.
+     * Set ExpressFreightDetail
      *
      * @param ExpressFreightDetail $expressFreightDetail
      * @return $this
@@ -205,7 +245,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Data applicable to shipments using FEDEX_FREIGHT and FEDEX_NATIONAL_FREIGHT services.
+     * Data applicable to shipments using FEDEX_FREIGHT_ECONOMY and FEDEX_FREIGHT_PRIORITY services.
      *
      * @param FreightShipmentDetail $freightShipmentDetail
      * @return $this
@@ -229,7 +269,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Details about how to calculate variable handling charges at the shipment level.
+     * Set VariableHandlingChargeDetail
      *
      * @param VariableHandlingChargeDetail $variableHandlingChargeDetail
      * @return $this
@@ -289,7 +329,7 @@ class RequestedShipment extends AbstractComplexType
     }
 
     /**
-     * Details about the image format and printer type the label is to returned in.
+     * Set LabelSpecification
      *
      * @param LabelSpecification $labelSpecification
      * @return $this
@@ -357,6 +397,18 @@ class RequestedShipment extends AbstractComplexType
     public function setShipmentOnlyFields(array $shipmentOnlyFields)
     {
         $this->values['ShipmentOnlyFields'] = $shipmentOnlyFields;
+        return $this;
+    }
+
+    /**
+     * Specifies data structures that may be re-used multiple times with s single shipment.
+     *
+     * @param ShipmentConfigurationData $configurationData
+     * @return $this
+     */
+    public function setConfigurationData(ShipmentConfigurationData $configurationData)
+    {
+        $this->values['ConfigurationData'] = $configurationData;
         return $this;
     }
 

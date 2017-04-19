@@ -4,10 +4,7 @@ namespace FedEx\RateService\ComplexType;
 use FedEx\AbstractComplexType;
 
 /**
- * 
-            For international multiple piece shipments, commodity information must be passed in the Master and on each child transaction.
-            If this shipment cotains more than four commodities line items, the four highest valued should be included in the first 4 occurances for this request.
-          
+ * Commodity
  *
  * @author      Jeremy Dunn <jeremy@jsdunn.info>
  * @package     PHP FedEx API wrapper
@@ -19,7 +16,7 @@ use FedEx\AbstractComplexType;
  * @property string $CountryOfManufacture
  * @property string $HarmonizedCode
  * @property Weight $Weight
- * @property int $Quantity
+ * @property float $Quantity
  * @property string $QuantityUnits
  * @property Measure[] $AdditionalMeasures
  * @property Money $UnitPrice
@@ -28,6 +25,7 @@ use FedEx\AbstractComplexType;
  * @property string $ExportLicenseNumber
  * @property string $ExportLicenseExpirationDate
  * @property string $CIMarksAndNumbers
+ * @property string $PartNumber
  * @property NaftaCommodityDetail $NaftaDetail
 
  */
@@ -41,7 +39,7 @@ class Commodity extends AbstractComplexType
     protected $name = 'Commodity';
 
     /**
-     * total number of pieces of this commodity
+     * Set Name
      *
      * @param string $name
      * @return $this
@@ -53,7 +51,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * total number of pieces of this commodity
+     * Set NumberOfPieces
      *
      * @param int $numberOfPieces
      * @return $this
@@ -65,7 +63,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * Complete and accurate description of this commodity.
+     * Set Description
      *
      * @param string $description
      * @return $this
@@ -77,7 +75,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * Country code where commodity contents were produced or manufactured in their final form.
+     * Set CountryOfManufacture
      *
      * @param string $countryOfManufacture
      * @return $this
@@ -89,10 +87,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * 
-                Unique alpha/numeric representing commodity item.
-                At least one occurrence is required for US Export shipments if the Customs Value is greater than $2500 or if a valid US Export license is required.
-              
+     * Set HarmonizedCode
      *
      * @param string $harmonizedCode
      * @return $this
@@ -104,7 +99,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * Total weight of this commodity. 1 explicit decimal position. Max length 11 including decimal.
+     * Set Weight
      *
      * @param Weight $weight
      * @return $this
@@ -116,9 +111,9 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * Number of units of a commodity in total number of pieces for this line item. Max length is 9
+     * This field is used for enterprise transactions.
      *
-     * @param int $quantity
+     * @param float $quantity
      * @return $this
      */
     public function setQuantity($quantity)
@@ -128,7 +123,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * Unit of measure used to express the quantity of this commodity line item.
+     * Set QuantityUnits
      *
      * @param string $quantityUnits
      * @return $this
@@ -152,7 +147,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * Value of each unit in Quantity. Six explicit decimal positions, Max length 18 including decimal.
+     * Set UnitPrice
      *
      * @param Money $unitPrice
      * @return $this
@@ -164,11 +159,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * 
-                Total customs value for this line item.
-                It should equal the commodity unit quantity times commodity unit value.
-                Six explicit decimal positions, max length 18 including decimal.
-              
+     * Set CustomsValue
      *
      * @param Money $customsValue
      * @return $this
@@ -192,7 +183,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * Applicable to US export shipping only.
+     * Set ExportLicenseNumber
      *
      * @param string $exportLicenseNumber
      * @return $this
@@ -216,9 +207,7 @@ class Commodity extends AbstractComplexType
     }
 
     /**
-     * 
-                An identifying mark or number used on the packaging of a shipment to help customers identify a particular shipment.
-              
+     * Set CIMarksAndNumbers
      *
      * @param string $cIMarksAndNumbers
      * @return $this
@@ -226,6 +215,18 @@ class Commodity extends AbstractComplexType
     public function setCIMarksAndNumbers($cIMarksAndNumbers)
     {
         $this->values['CIMarksAndNumbers'] = $cIMarksAndNumbers;
+        return $this;
+    }
+
+    /**
+     * Set PartNumber
+     *
+     * @param string $partNumber
+     * @return $this
+     */
+    public function setPartNumber($partNumber)
+    {
+        $this->values['PartNumber'] = $partNumber;
         return $this;
     }
 
